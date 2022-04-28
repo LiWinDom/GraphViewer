@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{3d455cca-bcc6-4964-a3ae-80dbc54827e2}</ProjectGuid>
-    <RootNamespace>Practicum1</RootNamespace>
+    <RootNamespace>GraphViewer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>GraphViewer</ProjectName>
   </PropertyGroup>
