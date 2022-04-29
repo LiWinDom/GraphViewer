@@ -3,19 +3,24 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "Button.h"
+#include "CheckBox.h"
 #include "Config.h"
 #include "Containers.h"
 
 sf::Font font;
-std::vector<Button*> buttons = {};
-Button* AVLButton;
+std::vector<CheckBox*> checkboxes = {};
+CheckBox* f1, *f2, *f3;
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
 
-    AVLButton = new Button(20, 20, TEXT_SIZE * 5, TEXT_SIZE, "Test", font, []() -> void {});
-    buttons = { AVLButton };
+    f1 = new CheckBox(30, 30, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF);
+    f1->setLabel("f1", font);
+    f2 = new CheckBox(30, 30 + TEXT_SIZE * 1.5 + PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF);
+    f2->setLabel("f2", font);
+    f3 = new CheckBox(30, 30 + TEXT_SIZE * 3 + PADDING_SIZE * 2, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF);
+    f3->setLabel("f3", font);
+    checkboxes = { f1, f2, f3 };
     //sf::Image icon;
     //icon.loadFromFile("resourses/icon.png");
     //window.setIcon(52, 52, icon.getPixelsPtr());
@@ -27,16 +32,18 @@ void onStart(sf::RenderWindow& window) {
 void display(sf::RenderWindow& window) {
     window.clear(sf::Color(BACKGROUND_COLOR));
 
-    for (uint8_t i = 0; i < buttons.size(); ++i) {
-        buttons[i]->draw(window);
+    for (uint8_t i = 0; i < checkboxes.size(); ++i) {
+        checkboxes[i]->draw(window);
     }
     window.display();
 
     return;
 }
 
-void clickEvent(sf::RenderWindow& window, uint16_t x, uint16_t y) {
-    
+void clickEvent(const sf::Vector2i& mousePos) {
+    for (uint8_t i = 0; i < checkboxes.size(); ++i) {
+        checkboxes[i]->eventProcessing(mousePos);
+    }
     return;
 }
 
@@ -49,9 +56,7 @@ void eventProcessing(sf::RenderWindow& window) {
         if (event.type == sf::Event::Closed) window.close();
 
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        for (uint8_t i = 0; i < buttons.size(); ++i) {
-            buttons[i]->eventProcessing(window);
-        }
+
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && (mouseButton == "none" || mouseButton == "left" || mouseButton == "leftMove")) {
             if (mouseButton == "none") {
                 mouseButton = "left";
@@ -66,7 +71,7 @@ void eventProcessing(sf::RenderWindow& window) {
         }
         else if (event.type == sf::Event::MouseButtonReleased) {
             if (mouseButton == "left") {
-                clickEvent(window, mousePos.x, mousePos.y);
+                clickEvent(mousePos);
             }
             mouseButton = "none";
         }
