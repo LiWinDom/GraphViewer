@@ -3,24 +3,30 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "CheckBox.h"
 #include "Config.h"
 #include "Containers.h"
+#include "Elements.h"
 
 sf::Font font;
 std::vector<CheckBox*> checkboxes = {};
-CheckBox* f1, *f2, *f3;
+CheckBox* f1, *f2, *f3, *f4, *f5, *f6;
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
 
     f1 = new CheckBox(30, 30, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF);
     f1->setLabel("f1", font);
-    f2 = new CheckBox(30, 30 + TEXT_SIZE * 1.5 + PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF);
+    f2 = new CheckBox(30, 30 + TEXT_SIZE * 1.5 + PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC0C000FF);
     f2->setLabel("f2", font);
-    f3 = new CheckBox(30, 30 + TEXT_SIZE * 3 + PADDING_SIZE * 2, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF);
+    f3 = new CheckBox(30, 30 + TEXT_SIZE * 3 + PADDING_SIZE * 2, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF);
     f3->setLabel("f3", font);
-    checkboxes = { f1, f2, f3 };
+    f4 = new CheckBox(30, 30 + TEXT_SIZE * 4.5 + PADDING_SIZE * 3, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C0C0FF);
+    f4->setLabel("f4", font);
+    f5 = new CheckBox(30, 30 + TEXT_SIZE * 6 + PADDING_SIZE * 4, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF);
+    f5->setLabel("f5", font);
+    f6 = new CheckBox(30, 30 + TEXT_SIZE * 7.5 + PADDING_SIZE * 5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC000C0FF);
+    f6->setLabel("f6", font);
+    checkboxes = { f1, f2, f3, f4, f5, f6 };
     //sf::Image icon;
     //icon.loadFromFile("resourses/icon.png");
     //window.setIcon(52, 52, icon.getPixelsPtr());

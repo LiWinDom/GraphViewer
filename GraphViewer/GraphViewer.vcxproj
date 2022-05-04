@@ -154,13 +154,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Config.h" />
+    <ClCompile Include="Elements\CheckBox.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Containers.h" />
+    <ClInclude Include="Elements.h" />
+    <ClInclude Include="Elements\CheckBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

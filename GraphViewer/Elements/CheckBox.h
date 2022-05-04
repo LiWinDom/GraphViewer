@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "Config.h"
-#include "Containers.h"
+#include "../Config.h"
 
 class CheckBox {
 public:

@@ -3,10 +3,11 @@
   <ItemGroup>
     <ClCompile Include="Config.h" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="CheckBox.cpp" />
+    <ClCompile Include="Elements\CheckBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers.h" />
-    <ClInclude Include="CheckBox.h" />
+    <ClInclude Include="Elements\CheckBox.h" />
+    <ClInclude Include="Elements.h" />
   </ItemGroup>
 </Project>
