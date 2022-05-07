@@ -1,21 +1,22 @@
 #include "TextField.h"
 
-TextField::TextField(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const uint32_t& selectedColor) {
+TextField::TextField(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const sf::Font& font) {
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
-    this->selectedColor = selectedColor;
 
     this->border.setFillColor(sf::Color(BACKGROUND_COLOR));
-    this->border.setOutlineColor(sf::Color(this->selectedColor));
+    this->border.setOutlineColor(sf::Color(INACTIVE_COLOR));
     this->border.setOutlineThickness(BORDER_SIZE);
     this->border.setSize(sf::Vector2f(this->width - 2 * BORDER_SIZE, this->height - 2 * BORDER_SIZE));
     this->border.setPosition(this->x + BORDER_SIZE, this->y + BORDER_SIZE);
 
-    this->text.setCharacterSize(TEXT_SIZE);
-    this->text.setPosition(this->x + this->width / 2, this->y + this->height / 2);
-    this->text.setFillColor(sf::Color(this->selectedColor));
+    this->textText.setCharacterSize(TEXT_SIZE);
+    this->textText.setOrigin(0, TEXT_SIZE / 1.5);
+    this->textText.setPosition(this->x + PADDING_SIZE, this->y + this->height / 2);
+    this->textText.setFillColor(sf::Color(HOVER_COLOR));
+    this->textText.setFont(font);
 
     return;
 }
@@ -32,51 +33,95 @@ void TextField::addEnterCallback(void (*callback)()) {
 
 void TextField::draw(sf::RenderWindow& window) {
     window.draw(border);
-    window.draw(text);
+    window.draw(textText);
 
     return;
 }
 
 void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos) {
-    static std::string mouseButton = "none";
-
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseButton == "none") {
+    // Hover change
+    if (!this->selected) {
         if (mousePos.x >= this->x && mousePos.x <= this->x + this->width &&
             mousePos.y >= this->y && mousePos.y <= this->y + this->height) {
-            mouseButton = "left";
+            this->border.setOutlineColor(sf::Color(HOVER_COLOR));
         }
         else {
-            mouseButton = "missed";
+            this->border.setOutlineColor(sf::Color(INACTIVE_COLOR));
+        }
+
+    }
+
+    // Click
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->mouseButton == "none") {
+        if (mousePos.x >= this->x && mousePos.x <= this->x + this->width &&
+            mousePos.y >= this->y && mousePos.y <= this->y + this->height) {
+            this->mouseButton = "left";
+        }
+        else {
+            this->mouseButton = "missed";
         }
     }
-    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && mouseButton == "none") {
-        mouseButton = "right";
+    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->mouseButton == "none") {
+        this->mouseButton = "right";
     }
     else if (event.type == sf::Event::MouseButtonReleased) {
-        if (mouseButton == "left") {
-            if (mousePos.x >= this->x && mousePos.x <= this->x + this->width &&
-                mousePos.y >= this->y && mousePos.y <= this->y + this->height) {
-                this->click();
+        if (mousePos.x >= this->x && mousePos.x <= this->x + this->width &&
+            mousePos.y >= this->y && mousePos.y <= this->y + this->height) {
+            if (this->mouseButton == "left") {
+                this->active();
             }
         }
-        mouseButton = "none";
+        else {
+            this->deactive();
+        }
+        this->mouseButton = "none";
+    }
+
+    // Keyboard event
+    if (this->selected) {
+        if (event.type == sf::Event::KeyPressed) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                for (uint8_t i = 0; i < this->enterCallbacks.size(); ++i) {
+                    this->enterCallbacks[i]();
+                }
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
+                if (text.size() > 0) {
+                    this->text.pop_back();
+                    this->textText.setString(this->text);
+
+                    for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
+                        this->changeCallbacks[i]();
+                    }
+                }
+            }
+        }
+        else if (event.type == sf::Event::TextEntered) {
+            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && !sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                this->text += event.text.unicode;
+                this->textText.setString(this->text);
+
+                for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
+                    this->changeCallbacks[i]();
+                }
+            }
+        }
     }
     return;
 }
 
-void TextField::click() {
-    this->selected = !this->selected;
-    if (this->selected) {
-        this->border.setFillColor(sf::Color(this->selectedColor));
-        this->text.setFillColor(sf::Color(BACKGROUND_COLOR));
-    }
-    else {
-        this->border.setFillColor(sf::Color(BACKGROUND_COLOR));
-        this->text.setFillColor(sf::Color(this->selectedColor));
-    }
+void TextField::active() {
+    this->selected = true;
+    this->border.setOutlineColor(sf::Color(SELECTED_COLOR));
+    this->textText.setFillColor(sf::Color(SELECTED_COLOR));
 
-    for (uint8_t i = 0; i < callbacks.size(); ++i) {
-        callbacks[i](this->selected);
-    }
+    return;
+}
+
+void TextField::deactive() {
+    this->selected = false;
+    this->textText.setFillColor(sf::Color(HOVER_COLOR));
+    this->border.setOutlineColor(sf::Color(INACTIVE_COLOR));
+
     return;
 }

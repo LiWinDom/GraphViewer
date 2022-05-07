@@ -13,11 +13,6 @@ std::vector<TextField*> textfields = {};
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
-
-    CheckBox* f1;
-    f1 = new CheckBox(30, 30, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF);
-    f1->setLabel("f1", font);
-    checkboxes.push_back(f1);
     //sf::Image icon;
     //icon.loadFromFile("resourses/icon.png");
     //window.setIcon(52, 52, icon.getPixelsPtr());
@@ -32,12 +27,11 @@ void display(sf::RenderWindow& window) {
     for (uint8_t i = 0; i < checkboxes.size(); ++i) {
         checkboxes[i]->draw(window);
     }
+    for (uint8_t i = 0; i < textfields.size(); ++i) {
+        textfields[i]->draw(window);
+    }
+
     window.display();
-
-    return;
-}
-
-void clickEvent(const sf::Vector2i& mousePos) {
     return;
 }
 
@@ -48,9 +42,11 @@ void eventProcessing(sf::RenderWindow& window) {
         if (event.type == sf::Event::Closed) window.close();
 
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
         for (uint8_t i = 0; i < checkboxes.size(); ++i) {
             checkboxes[i]->eventProcessing(event, mousePos);
+        }
+        for (uint8_t i = 0; i < textfields.size(); ++i) {
+            textfields[i]->eventProcessing(event, mousePos);
         }
     }
     return;

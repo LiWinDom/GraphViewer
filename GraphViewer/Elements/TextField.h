@@ -7,7 +7,7 @@
 
 class TextField {
 public:
-    TextField(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const uint32_t& selectedColor = SELECTED_COLOR);
+    TextField(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const sf::Font& font);
 
     void addChangeCallback(void (*callback)());
 
@@ -17,16 +17,19 @@ public:
 
     void eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos);
 
-    void click();
+    void active();
+
+    void deactive();
 
 private:
     int16_t x, y;
     uint16_t width, height;
-    uint32_t selectedColor;
+    std::string text = "";
+    std::string mouseButton = "none";
 
     bool selected = false;
     sf::RectangleShape border;
-    sf::Text text;
+    sf::Text textText;
 
     std::vector<void (*)()> changeCallbacks = {}, enterCallbacks = {};
 };
