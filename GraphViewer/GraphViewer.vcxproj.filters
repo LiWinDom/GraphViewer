@@ -4,10 +4,12 @@
     <ClCompile Include="Config.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Elements\CheckBox.cpp" />
+    <ClCompile Include="Elements\TextField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Elements\CheckBox.h" />
     <ClInclude Include="Elements.h" />
+    <ClInclude Include="Elements\TextField.h" />
   </ItemGroup>
 </Project>

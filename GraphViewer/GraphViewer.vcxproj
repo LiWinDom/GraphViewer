@@ -156,12 +156,14 @@
   <ItemGroup>
     <ClCompile Include="Config.h" />
     <ClCompile Include="Elements\CheckBox.cpp" />
+    <ClCompile Include="Elements\TextField.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Elements.h" />
     <ClInclude Include="Elements\CheckBox.h" />
+    <ClInclude Include="Elements\TextField.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

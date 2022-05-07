@@ -9,24 +9,15 @@
 
 sf::Font font;
 std::vector<CheckBox*> checkboxes = {};
-CheckBox* f1, *f2, *f3, *f4, *f5, *f6;
+std::vector<TextField*> textfields = {};
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
 
+    CheckBox* f1;
     f1 = new CheckBox(30, 30, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF);
     f1->setLabel("f1", font);
-    f2 = new CheckBox(30, 30 + TEXT_SIZE * 1.5 + PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC0C000FF);
-    f2->setLabel("f2", font);
-    f3 = new CheckBox(30, 30 + TEXT_SIZE * 3 + PADDING_SIZE * 2, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF);
-    f3->setLabel("f3", font);
-    f4 = new CheckBox(30, 30 + TEXT_SIZE * 4.5 + PADDING_SIZE * 3, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C0C0FF);
-    f4->setLabel("f4", font);
-    f5 = new CheckBox(30, 30 + TEXT_SIZE * 6 + PADDING_SIZE * 4, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF);
-    f5->setLabel("f5", font);
-    f6 = new CheckBox(30, 30 + TEXT_SIZE * 7.5 + PADDING_SIZE * 5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC000C0FF);
-    f6->setLabel("f6", font);
-    checkboxes = { f1, f2, f3, f4, f5, f6 };
+    checkboxes.push_back(f1);
     //sf::Image icon;
     //icon.loadFromFile("resourses/icon.png");
     //window.setIcon(52, 52, icon.getPixelsPtr());
@@ -47,39 +38,19 @@ void display(sf::RenderWindow& window) {
 }
 
 void clickEvent(const sf::Vector2i& mousePos) {
-    for (uint8_t i = 0; i < checkboxes.size(); ++i) {
-        checkboxes[i]->eventProcessing(mousePos);
-    }
     return;
 }
 
 void eventProcessing(sf::RenderWindow& window) {
     sf::Event event;
-    static std::string mouseButton = "none";
-    static sf::Vector2i lastMousePos;
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) window.close();
 
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && (mouseButton == "none" || mouseButton == "left" || mouseButton == "leftMove")) {
-            if (mouseButton == "none") {
-                mouseButton = "left";
-            }
-            else if (lastMousePos - sf::Mouse::getPosition() != sf::Vector2i(0, 0)) {
-                mouseButton = "leftMove";
-            }
-            lastMousePos = sf::Mouse::getPosition();
-        }
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && mouseButton == "none") {
-            mouseButton = "right";
-        }
-        else if (event.type == sf::Event::MouseButtonReleased) {
-            if (mouseButton == "left") {
-                clickEvent(mousePos);
-            }
-            mouseButton = "none";
+        for (uint8_t i = 0; i < checkboxes.size(); ++i) {
+            checkboxes[i]->eventProcessing(event, mousePos);
         }
     }
     return;

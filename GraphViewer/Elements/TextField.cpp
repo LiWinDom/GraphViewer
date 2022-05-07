@@ -1,6 +1,6 @@
-#include "CheckBox.h"
+#include "TextField.h"
 
-CheckBox::CheckBox(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const uint32_t& selectedColor) {
+TextField::TextField(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height, const uint32_t& selectedColor) {
     this->x = x;
     this->y = y;
     this->width = width;
@@ -20,28 +20,24 @@ CheckBox::CheckBox(const int16_t& x, const int16_t& y, const uint16_t& width, co
     return;
 }
 
-void CheckBox::setLabel(const std::string& label, const sf::Font& font) {
-    this->text.setFont(font);
-    this->text.setString(label);
-    sf::FloatRect bounds = this->text.getLocalBounds();
-    this->text.setOrigin(bounds.width / 2.0, TEXT_SIZE / 1.5);
-
+void TextField::addChangeCallback(void (*callback)()) {
+    this->changeCallbacks.push_back(callback);
     return;
 }
 
-void CheckBox::addCallback(void (*callback)(const bool&)) {
-    this->callbacks.push_back(callback);
+void TextField::addEnterCallback(void (*callback)()) {
+    this->enterCallbacks.push_back(callback);
     return;
 }
 
-void CheckBox::draw(sf::RenderWindow& window) {
+void TextField::draw(sf::RenderWindow& window) {
     window.draw(border);
     window.draw(text);
 
     return;
 }
 
-void CheckBox::eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos) {
+void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos) {
     static std::string mouseButton = "none";
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseButton == "none") {
@@ -68,7 +64,7 @@ void CheckBox::eventProcessing(const sf::Event& event, const sf::Vector2i& mouse
     return;
 }
 
-void CheckBox::click() {
+void TextField::click() {
     this->selected = !this->selected;
     if (this->selected) {
         this->border.setFillColor(sf::Color(this->selectedColor));
