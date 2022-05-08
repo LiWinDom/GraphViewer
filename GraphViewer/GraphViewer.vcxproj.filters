@@ -5,11 +5,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Elements\CheckBox.cpp" />
     <ClCompile Include="Elements\TextField.cpp" />
+    <ClCompile Include="FormulaTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Elements\CheckBox.h" />
     <ClInclude Include="Elements.h" />
     <ClInclude Include="Elements\TextField.h" />
+    <ClInclude Include="FormulaTree.h" />
   </ItemGroup>
 </Project>

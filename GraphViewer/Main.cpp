@@ -18,6 +18,8 @@ void onStart(sf::RenderWindow& window) {
     //window.setIcon(52, 52, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
 
+    textfields.push_back(new TextField(30, 30, TEXT_SIZE * 20, TEXT_SIZE * 1.5, font));
+
     return;
 }
 

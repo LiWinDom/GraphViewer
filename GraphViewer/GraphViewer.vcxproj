@@ -157,6 +157,7 @@
     <ClCompile Include="Config.h" />
     <ClCompile Include="Elements\CheckBox.cpp" />
     <ClCompile Include="Elements\TextField.cpp" />
+    <ClCompile Include="FormulaTree.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Elements.h" />
     <ClInclude Include="Elements\CheckBox.h" />
     <ClInclude Include="Elements\TextField.h" />
+    <ClInclude Include="FormulaTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
