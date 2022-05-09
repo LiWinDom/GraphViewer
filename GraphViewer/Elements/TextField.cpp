@@ -25,6 +25,22 @@ std::string TextField::getText() {
     return this->text;
 }
 
+void TextField::active() {
+    this->selected = true;
+    this->border.setOutlineColor(sf::Color(SELECTED_COLOR));
+    this->textText.setFillColor(sf::Color(SELECTED_COLOR));
+
+    return;
+}
+
+void TextField::deactive() {
+    this->selected = false;
+    this->textText.setFillColor(sf::Color(HOVER_COLOR));
+    this->border.setOutlineColor(sf::Color(INACTIVE_COLOR));
+
+    return;
+}
+
 void TextField::addChangeCallback(void (*callback)()) {
     this->changeCallbacks.push_back(callback);
     return;
@@ -32,13 +48,6 @@ void TextField::addChangeCallback(void (*callback)()) {
 
 void TextField::addEnterCallback(void (*callback)()) {
     this->enterCallbacks.push_back(callback);
-    return;
-}
-
-void TextField::draw(sf::RenderWindow& window) {
-    window.draw(border);
-    window.draw(textText);
-
     return;
 }
 
@@ -124,18 +133,9 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
     return;
 }
 
-void TextField::active() {
-    this->selected = true;
-    this->border.setOutlineColor(sf::Color(SELECTED_COLOR));
-    this->textText.setFillColor(sf::Color(SELECTED_COLOR));
-
-    return;
-}
-
-void TextField::deactive() {
-    this->selected = false;
-    this->textText.setFillColor(sf::Color(HOVER_COLOR));
-    this->border.setOutlineColor(sf::Color(INACTIVE_COLOR));
+void TextField::draw(sf::RenderWindow& window) {
+    window.draw(border);
+    window.draw(textText);
 
     return;
 }

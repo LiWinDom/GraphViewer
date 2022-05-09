@@ -11,18 +11,19 @@ public:
 
     void setLabel(const std::string& label, const sf::Font& font);
 
+    void click();
+
     void addCallback(void (*callback)(const bool&));
 
-    void draw(sf::RenderWindow& window);
-
     void eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos);
-    
-    void click();
+
+    void draw(sf::RenderWindow& window);
 
 private:
     int16_t x, y;
     uint16_t width, height;
     uint32_t selectedColor;
+    std::string mouseButton = "none";
 
     bool selected = false;
     sf::RectangleShape border;

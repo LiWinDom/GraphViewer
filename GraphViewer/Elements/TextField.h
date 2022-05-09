@@ -11,17 +11,17 @@ public:
 
     std::string getText();
 
+    void active();
+
+    void deactive();
+
     void addChangeCallback(void (*callback)());
 
     void addEnterCallback(void (*callback)());
 
-    void draw(sf::RenderWindow& window);
-
     void eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos);
 
-    void active();
-
-    void deactive();
+    void draw(sf::RenderWindow& window);
 
 private:
     int16_t x, y;

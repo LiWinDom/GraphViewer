@@ -12,8 +12,8 @@ sf::Font font;
 std::vector<CheckBox*> checkboxes = {};
 std::vector<TextField*> textfields = {};
 
-FormulaTree testTree;
-sf::Text text;
+GraphDrawer drawer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+FormulaTree test;
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
@@ -22,36 +22,33 @@ void onStart(sf::RenderWindow& window) {
     //window.setIcon(52, 52, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
 
-    text.setCharacterSize(TEXT_SIZE);
-    text.setFillColor(sf::Color(SELECTED_COLOR));
-    text.setPosition(30, 30);
-    text.setFont(font);
-    text.setString("Ready");
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, PADDING_SIZE, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF));
+    checkboxes[0]->setLabel("f1", font);
+    checkboxes[0]->click();
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 2 * PADDING_SIZE + TEXT_SIZE * 1.5, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 2 * PADDING_SIZE + TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC0C000FF));
+    checkboxes[1]->setLabel("f2", font);
+    checkboxes[1]->click();
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 3 * PADDING_SIZE + TEXT_SIZE * 3, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 3 * PADDING_SIZE + TEXT_SIZE * 3, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF));
+    checkboxes[2]->setLabel("f3", font);
+    checkboxes[2]->click();
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 4 * PADDING_SIZE + TEXT_SIZE * 4.5, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 4 * PADDING_SIZE + TEXT_SIZE * 4.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C0C0FF));
+    checkboxes[3]->setLabel("f4", font);
+    checkboxes[3]->click();
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 5 * PADDING_SIZE + TEXT_SIZE * 6, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 5 * PADDING_SIZE + TEXT_SIZE * 6, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF));
+    checkboxes[4]->setLabel("f5", font);
+    checkboxes[4]->click();
+    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 6 * PADDING_SIZE + TEXT_SIZE * 7.5, 320, TEXT_SIZE * 1.5, font));
+    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 6 * PADDING_SIZE + TEXT_SIZE * 7.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC000C0FF));
+    checkboxes[5]->setLabel("f6", font);
+    checkboxes[5]->click();
 
-    textfields.push_back(new TextField(30, 80, TEXT_SIZE * 20, TEXT_SIZE * 1.5, font));
-    textfields.push_back(new TextField(TEXT_SIZE * 20 + PADDING_SIZE + 30, 80, TEXT_SIZE * 5, TEXT_SIZE * 1.5, font));
-    textfields[0]->addChangeCallback([]() -> void {
-        try {
-            testTree.convertPolynom(textfields[0]->getText());
-            text.setString("OK");
-        }
-        catch (Error err) {
-            text.setString(err.source + ": " + err.message);
-        }
-    });
-    textfields[0]->addEnterCallback([]() -> void {
-        try {
-            if (textfields[1]->getText() != "") {
-                text.setString(std::to_string(testTree.count(std::stod(textfields[1]->getText()))));
-            }
-            else {
-                text.setString(std::to_string(testTree.count(0)));
-            }
-        }
-        catch (Error err) {
-            text.setString(err.source + ": " + err.message);
-        }
-    });
+    test.convertPolynom("sin(x + t)");
+    drawer.addGraph(test, 0xC00000FF);
     
     return;
 }
@@ -59,13 +56,13 @@ void onStart(sf::RenderWindow& window) {
 void display(sf::RenderWindow& window) {
     window.clear(sf::Color(BACKGROUND_COLOR));
 
+    drawer.draw(window);
     for (uint8_t i = 0; i < checkboxes.size(); ++i) {
         checkboxes[i]->draw(window);
     }
     for (uint8_t i = 0; i < textfields.size(); ++i) {
         textfields[i]->draw(window);
     }
-    window.draw(text);
 
     window.display();
     return;

@@ -11,7 +11,7 @@ class FormulaTree
 public:
 	void deleteTree();
 
-	double count(const double& x = 0);
+	double calc(const double& x = 0);
 
 	void convertPolynom(std::string polynom);
 
@@ -38,6 +38,6 @@ private:
 
 	void deleteSubtree(Node*& node);
 
-	double countSubtree(Node* node, const double& x = 0);
+	double calcSubtree(Node* node, const double& x = 0);
 };
 

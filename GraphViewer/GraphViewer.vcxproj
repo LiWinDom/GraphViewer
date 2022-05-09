@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="Config.h" />
     <ClCompile Include="Elements\CheckBox.cpp" />
+    <ClCompile Include="Elements\GraphDrawer.cpp" />
     <ClCompile Include="Elements\TextField.cpp" />
     <ClCompile Include="FormulaTree.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Elements.h" />
     <ClInclude Include="Elements\CheckBox.h" />
+    <ClInclude Include="Elements\GraphDrawer.h" />
     <ClInclude Include="Elements\TextField.h" />
     <ClInclude Include="FormulaTree.h" />
   </ItemGroup>

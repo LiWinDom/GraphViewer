@@ -29,21 +29,29 @@ void CheckBox::setLabel(const std::string& label, const sf::Font& font) {
     return;
 }
 
+void CheckBox::click() {
+    this->selected = !this->selected;
+    if (this->selected) {
+        this->border.setFillColor(sf::Color(this->selectedColor));
+        this->text.setFillColor(sf::Color(BACKGROUND_COLOR));
+    }
+    else {
+        this->border.setFillColor(sf::Color(BACKGROUND_COLOR));
+        this->text.setFillColor(sf::Color(this->selectedColor));
+    }
+
+    for (uint8_t i = 0; i < callbacks.size(); ++i) {
+        callbacks[i](this->selected);
+    }
+    return;
+}
+
 void CheckBox::addCallback(void (*callback)(const bool&)) {
     this->callbacks.push_back(callback);
     return;
 }
 
-void CheckBox::draw(sf::RenderWindow& window) {
-    window.draw(border);
-    window.draw(text);
-
-    return;
-}
-
 void CheckBox::eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos) {
-    static std::string mouseButton = "none";
-
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseButton == "none") {
         if (mousePos.x >= this->x && mousePos.x <= this->x + this->width &&
             mousePos.y >= this->y && mousePos.y <= this->y + this->height) {
@@ -68,19 +76,9 @@ void CheckBox::eventProcessing(const sf::Event& event, const sf::Vector2i& mouse
     return;
 }
 
-void CheckBox::click() {
-    this->selected = !this->selected;
-    if (this->selected) {
-        this->border.setFillColor(sf::Color(this->selectedColor));
-        this->text.setFillColor(sf::Color(BACKGROUND_COLOR));
-    }
-    else {
-        this->border.setFillColor(sf::Color(BACKGROUND_COLOR));
-        this->text.setFillColor(sf::Color(this->selectedColor));
-    }
+void CheckBox::draw(sf::RenderWindow& window) {
+    window.draw(border);
+    window.draw(text);
 
-    for (uint8_t i = 0; i < callbacks.size(); ++i) {
-        callbacks[i](this->selected);
-    }
     return;
 }

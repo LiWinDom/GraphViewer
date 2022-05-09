@@ -6,6 +6,7 @@
     <ClCompile Include="Elements\CheckBox.cpp" />
     <ClCompile Include="Elements\TextField.cpp" />
     <ClCompile Include="FormulaTree.cpp" />
+    <ClCompile Include="Elements\GraphDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers.h" />
@@ -13,5 +14,6 @@
     <ClInclude Include="Elements.h" />
     <ClInclude Include="Elements\TextField.h" />
     <ClInclude Include="FormulaTree.h" />
+    <ClInclude Include="Elements\GraphDrawer.h" />
   </ItemGroup>
 </Project>
