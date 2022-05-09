@@ -36,7 +36,7 @@ private:
 
 	Node* start = nullptr;
 
-	void deleteSubtree(Node* node);
+	void deleteSubtree(Node*& node);
 
 	double countSubtree(Node* node, const double& x = 0);
 };

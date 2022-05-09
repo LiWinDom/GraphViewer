@@ -21,6 +21,10 @@ TextField::TextField(const int16_t& x, const int16_t& y, const uint16_t& width, 
     return;
 }
 
+std::string TextField::getText() {
+    return this->text;
+}
+
 void TextField::addChangeCallback(void (*callback)()) {
     this->changeCallbacks.push_back(callback);
     return;
@@ -88,6 +92,16 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
                 if (text.size() > 0) {
                     this->text.pop_back();
+                    this->textText.setString(this->text);
+
+                    for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
+                        this->changeCallbacks[i]();
+                    }
+                }
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Delete)) {
+                if (text.size() > 0) {
+                    this->text = "";
                     this->textText.setString(this->text);
 
                     for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
