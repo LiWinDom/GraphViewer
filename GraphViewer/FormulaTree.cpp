@@ -46,7 +46,7 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				last = "operation";
 				continue;
 			}
-			if (polynom[i] == 'x' || polynom[i] == 't') {
+			if (polynom[i] == 'x' || polynom[i] == 't' || polynom[i] == 'e') {
 				nodes.push(new Node(std::string(1, polynom[i])));
 				last = "letter";
 				continue;
@@ -142,10 +142,10 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				last = "operation";
 				continue;
 			}
-			if (polynom[i] == 'x' || polynom[i] == 't') {
+			if (polynom[i] == 'x' || polynom[i] == 't' || polynom[i] == 'e') {
 				nodes.push(new Node(number));
 				number = 0;
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/") {
+				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
 					Node* cur = new Node(operations.top()); operations.pop();
 					if (cur->operation == "sin" || cur->operation == "cos") {
 						Node* left = nodes.top(); nodes.pop();
@@ -167,20 +167,6 @@ void FormulaTree::convertPolynom(std::string polynom) {
 			if (polynom[i] == 's') {
 				nodes.push(new Node(number));
 				number = 0;
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				operations.push("*");
 				last = "s";
 				continue;
@@ -188,20 +174,6 @@ void FormulaTree::convertPolynom(std::string polynom) {
 			if (polynom[i] == 'c') {
 				nodes.push(new Node(number));
 				number = 0;
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				operations.push("*");
 				last = "c";
 				continue;
@@ -244,44 +216,16 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				last = "number";
 				continue;
 			}
-			if (polynom[i] == 'x' || polynom[i] == 't') {
+			if (polynom[i] == 'x' || polynom[i] == 't' || polynom[i] == 'e') {
 				nodes.push(new Node(std::string(1, polynom[i])));
 				last = "letter";
 				continue;
 			}
 			if (polynom[i] == 's') {
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				last = "s";
 				continue;
 			}
 			if (polynom[i] == 'c') {
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				last = "c";
 				continue;
 			}
@@ -369,8 +313,8 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				last = "operation";
 				continue;
 			}
-			if (polynom[i] == 'x' || polynom[i] == 't') {
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/") {
+			if (polynom[i] == 'x' || polynom[i] == 't' || polynom[i] == 'e') {
+				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
 					Node* cur = new Node(operations.top()); operations.pop();
 					if (cur->operation == "sin" || cur->operation == "cos") {
 						Node* left = nodes.top(); nodes.pop();
@@ -390,39 +334,11 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				continue;
 			}
 			if (polynom[i] == 's') {
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				operations.push("*");
 				last = "s";
 				continue;
 			}
 			if (polynom[i] == 'c') {
-				while (operations.top() != "(" && operations.top() != "sin" && operations.top() != "cos" && operations.top() != "+" && operations.top() != "-" && operations.top() != "*" && operations.top() != "/" && operations.top() != "^") {
-					Node* cur = new Node(operations.top()); operations.pop();
-					if (cur->operation == "sin" || cur->operation == "cos") {
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-					}
-					else {
-						Node* right = nodes.top(); nodes.pop();
-						Node* left = nodes.top(); nodes.pop();
-						cur->left = left;
-						cur->right = right;
-					}
-					nodes.push(cur);
-				}
 				operations.push("*");
 				last = "c";
 				continue;
@@ -827,6 +743,7 @@ double FormulaTree::countSubtree(Node* node, const double& x) {
 	if (node->operation == "number") return node->number;
 	if (node->operation == "x") return x;
 	if (node->operation == "t") return clock() / double(CLOCKS_PER_SEC);
+	if (node->operation == "e") return std::exp(1);
 	if (node->operation == "+") return this->countSubtree(node->left, x) + this->countSubtree(node->right, x);
 	if (node->operation == "-") return this->countSubtree(node->left, x) - this->countSubtree(node->right, x);
 	if (node->operation == "*") return this->countSubtree(node->left, x) * this->countSubtree(node->right, x);
