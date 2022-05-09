@@ -89,7 +89,7 @@ void eventProcessing(sf::RenderWindow& window) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [0.31]", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [0.32]", sf::Style::Close);
     onStart(window);
 
     while (window.isOpen()) {

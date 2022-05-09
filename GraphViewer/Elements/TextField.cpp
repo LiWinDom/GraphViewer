@@ -111,7 +111,7 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
             }
         }
         else if (event.type == sf::Event::TextEntered) {
-            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && !sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            if (event.text.unicode >= 32 && event.text.unicode <= 126) {
                 this->text += event.text.unicode;
                 this->textText.setString(this->text);
 
