@@ -34,6 +34,9 @@ private:
 	std::string mouseButton = "none";
 	sf::Vector2i lastMousePos;
 
+	double precisions[5] = {10, 5, 1, 0.5, 0.1};
+	uint8_t curPrecision = 4;
+
 	struct Graph {
 		Graph(const FormulaTree& tree, const uint32_t& color, const bool& show = true) {
 			this->color = color;
@@ -53,9 +56,9 @@ private:
 
 	std::vector<Graph*> graphs;
 
-	sf::Vector2i coordinateToPoint(const sf::Vector2f& coordinate);
+	sf::Vector2f coordinateToPoint(const sf::Vector2f& coordinate);
 
-	sf::Vector2f pointToCoordinate(const sf::Vector2i& point);
+	sf::Vector2f pointToCoordinate(const sf::Vector2f& point);
 
 	void drawPrimaryLines(sf::RenderWindow& window);
 

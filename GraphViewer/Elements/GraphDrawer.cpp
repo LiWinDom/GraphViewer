@@ -46,6 +46,15 @@ void GraphDrawer::hideGraph(const uint8_t& index) {
 }
 
 void GraphDrawer::eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos) {
+	if (event.type == sf::Event::KeyPressed) {
+		if (event.key.code == sf::Keyboard::Up) {
+			if (this->curPrecision < 4) ++this->curPrecision;
+		}
+		else if (event.key.code == sf::Keyboard::Down) {
+			if (this->curPrecision > 0) --this->curPrecision;
+		}
+	}
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && (this->mouseButton == "none" || this->mouseButton == "left" || this->mouseButton == "leftMove")) {
 		if (mouseButton == "none") {
 			mouseButton = "left";
@@ -87,12 +96,12 @@ void GraphDrawer::draw(sf::RenderWindow& window) {
 	return;
 }
 
-sf::Vector2i GraphDrawer::coordinateToPoint(const sf::Vector2f& coordinate) {
-	return sf::Vector2i((coordinate.x - this->shift.x) * this->scale + this->width / 2 + this->x,
+sf::Vector2f GraphDrawer::coordinateToPoint(const sf::Vector2f& coordinate) {
+	return sf::Vector2f((coordinate.x - this->shift.x) * this->scale + this->width / 2 + this->x,
 		(-coordinate.y - this->shift.y) * this->scale + this->height / 2 + this->y);
 }
 
-sf::Vector2f GraphDrawer::pointToCoordinate(const sf::Vector2i& point) {
+sf::Vector2f GraphDrawer::pointToCoordinate(const sf::Vector2f& point) {
 	return sf::Vector2f((point.x - this->x - this->width / 2.0) / this->scale + this->shift.x,
 		 -((point.y - this->y - this->height / 2.0) / this->scale + this->shift.y));
 }
@@ -100,12 +109,12 @@ sf::Vector2f GraphDrawer::pointToCoordinate(const sf::Vector2i& point) {
 void GraphDrawer::drawPrimaryLines(sf::RenderWindow& window) {
 	double intpart;
 	std::pair<double, double> xPrev, xCur, xNext;
-	xPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(this->x - 1, 0)).x), &intpart);
+	xPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(this->x - 1, 0)).x), &intpart);
 	xPrev.first = intpart;
-	xCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(this->x, 0)).x), &intpart);
+	xCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(this->x, 0)).x), &intpart);
 	xCur.first = intpart;
 	for (int16_t j = this->x + 1; j <= this->x + this->width; ++j) {
-		xNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(j, 0)).x), &intpart);
+		xNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(j, 0)).x), &intpart);
 		xNext.first = intpart;
 
 		if (xCur.first == 0 && xCur.second <= xPrev.second && xCur.second < xNext.second) {
@@ -123,12 +132,12 @@ void GraphDrawer::drawPrimaryLines(sf::RenderWindow& window) {
 	}
 
 	std::pair<double, double> yPrev, yCur, yNext;
-	yPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, this->y - 1)).y), &intpart);
+	yPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, this->y - 1)).y), &intpart);
 	yPrev.first = intpart;
-	yCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, this->y)).y), &intpart);
+	yCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, this->y)).y), &intpart);
 	yCur.first = intpart;
 	for (int16_t j = this->y + 1; j <= this->y + this->height; ++j) {
-		yNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, j)).y), &intpart);
+		yNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, j)).y), &intpart);
 		yNext.first = intpart;
 
 		if (yCur.first == 0 && yCur.second <= yPrev.second && yCur.second < yNext.second) {
@@ -157,12 +166,12 @@ void GraphDrawer::drawSecondaryLines(sf::RenderWindow& window) {
 
 	double intpart;
 	std::pair<double, double> xPrev, xCur, xNext;
-	xPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(this->x - 1, 0)).x) * multiplier, &intpart);
+	xPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(this->x - 1, 0)).x) * multiplier, &intpart);
 	xPrev.first = intpart;
-	xCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(this->x, 0)).x) * multiplier, &intpart);
+	xCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(this->x, 0)).x) * multiplier, &intpart);
 	xCur.first = intpart;
 	for (int16_t j = this->x + 1; j <= this->x + this->width; ++j) {
-		xNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(j, 0)).x) * multiplier, &intpart);
+		xNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(j, 0)).x) * multiplier, &intpart);
 		xNext.first = intpart;
 
 		if (xCur.second <= xPrev.second && xCur.second < xNext.second) {
@@ -179,12 +188,12 @@ void GraphDrawer::drawSecondaryLines(sf::RenderWindow& window) {
 	}
 
 	std::pair<double, double> yPrev, yCur, yNext;
-	yPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, this->y - 1)).y) * multiplier, &intpart);
+	yPrev.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, this->y - 1)).y) * multiplier, &intpart);
 	yPrev.first = intpart;
-	yCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, this->y)).y) * multiplier, &intpart);
+	yCur.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, this->y)).y) * multiplier, &intpart);
 	yCur.first = intpart;
 	for (int16_t j = this->y + 1; j <= this->y + this->height; ++j) {
-		yNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2i(0, j)).y) * multiplier, &intpart);
+		yNext.second = std::modf(std::abs(this->pointToCoordinate(sf::Vector2f(0, j)).y) * multiplier, &intpart);
 		yNext.first = intpart;
 
 		if (yCur.second <= yPrev.second && yCur.second < yNext.second) {
@@ -214,16 +223,16 @@ void GraphDrawer::drawGraph(sf::RenderWindow& window, Graph* graph) {
 	}
 
 	sf::Vector2f lastPoint;
-	for (int16_t i = this->x; i < this->x + this->width; ++i) {
-		double graphX = this->pointToCoordinate(sf::Vector2i(i, 0)).x;
+	for (double i = this->x; i < this->x + this->width; i+=this->precisions[this->curPrecision]) {
+		double graphX = this->pointToCoordinate(sf::Vector2f(i, 0)).x;
 		double graphY = graph->calc(graphX);
-		int64_t j = this->coordinateToPoint(sf::Vector2f(0, graphY)).y;
+		double j = this->coordinateToPoint(sf::Vector2f(0, graphY)).y;
 
 		if (i > this->x) {
 			if ((j > this->y && j < this->y + this->height && lastPoint.y > -32768 && lastPoint.y < 32767) ||
 				(graphY > -32768 && graphY < 32767 && this->coordinateToPoint(lastPoint).y > this->y && this->coordinateToPoint(lastPoint).y < this->y + this->height)) {
 				sf::VertexArray line(sf::LinesStrip, 2);
-				line[0].position = sf::Vector2f(this->coordinateToPoint(lastPoint));
+				line[0].position = this->coordinateToPoint(lastPoint);
 				line[1].position = sf::Vector2f(i, j);
 				line[0].color = sf::Color(graph->color);
 				line[1].color = sf::Color(graph->color);
