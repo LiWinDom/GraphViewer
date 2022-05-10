@@ -17,6 +17,10 @@ public:
 
 	void changeColor(const uint8_t& index, const uint32_t& color);
 
+	void showGraph(const uint8_t& index);
+
+	void hideGraph(const uint8_t& index);
+
 	void eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos);
 
 	void draw(sf::RenderWindow& window);
@@ -26,9 +30,10 @@ private:
 	uint16_t width, height;
 
 	struct Graph {
-		Graph(const FormulaTree& tree, const uint32_t& color) {
+		Graph(const FormulaTree& tree, const uint32_t& color, const bool& show = true) {
 			this->color = color;
 			this->tree = tree;
+			this->show = show;
 			return;
 		}
 
@@ -36,8 +41,9 @@ private:
 			return this->tree.calc(x);
 		}
 
-		uint32_t color;
 		FormulaTree tree;
+		uint32_t color;
+		bool show;
 	};
 
 	std::vector<Graph*> graphs;

@@ -13,7 +13,119 @@ std::vector<CheckBox*> checkboxes = {};
 std::vector<TextField*> textfields = {};
 
 GraphDrawer drawer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-FormulaTree test;
+
+void createCallbacks() {
+    textfields[0]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(0, tree);
+            return;
+        }
+    );
+    textfields[1]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(1, tree);
+            return;
+        }
+    );
+    textfields[2]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(2, tree);
+            return;
+        }
+    );
+    textfields[3]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(3, tree);
+            return;
+        }
+    );
+    textfields[4]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(4, tree);
+            return;
+        }
+    );
+    textfields[5]->addChangeCallback([](const std::string& text) ->
+        void {
+            FormulaTree tree;
+            try {
+                tree.convertPolynom(text);
+            }
+            catch (Error err) {}
+            drawer.changeGraph(5, tree);
+            return;
+        }
+    );
+
+    checkboxes[0]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(0);
+            else drawer.hideGraph(0);
+            return;
+        }
+    );
+    checkboxes[1]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(1);
+            else drawer.hideGraph(1);
+            return;
+        }
+    );
+    checkboxes[2]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(2);
+            else drawer.hideGraph(2);
+            return;
+        }
+    );
+    checkboxes[3]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(3);
+            else drawer.hideGraph(3);
+            return;
+        }
+    );
+    checkboxes[4]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(4);
+            else drawer.hideGraph(4);
+            return;
+        }
+    );
+    checkboxes[5]->addCallback([](const bool& selected) ->
+        void {
+            if (selected) drawer.showGraph(5);
+            else drawer.hideGraph(5);
+            return;
+        }
+    );
+    return;
+}
 
 void onStart(sf::RenderWindow& window) {
     font.loadFromFile("resourses/Consolas.ttf");
@@ -22,34 +134,19 @@ void onStart(sf::RenderWindow& window) {
     //window.setIcon(52, 52, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
 
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, PADDING_SIZE, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, PADDING_SIZE, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC00000FF));
-    checkboxes[0]->setLabel("f1", font);
-    checkboxes[0]->click();
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 2 * PADDING_SIZE + TEXT_SIZE * 1.5, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 2 * PADDING_SIZE + TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC0C000FF));
-    checkboxes[1]->setLabel("f2", font);
-    checkboxes[1]->click();
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 3 * PADDING_SIZE + TEXT_SIZE * 3, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 3 * PADDING_SIZE + TEXT_SIZE * 3, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C000FF));
-    checkboxes[2]->setLabel("f3", font);
-    checkboxes[2]->click();
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 4 * PADDING_SIZE + TEXT_SIZE * 4.5, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 4 * PADDING_SIZE + TEXT_SIZE * 4.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x00C0C0FF));
-    checkboxes[3]->setLabel("f4", font);
-    checkboxes[3]->click();
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 5 * PADDING_SIZE + TEXT_SIZE * 6, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 5 * PADDING_SIZE + TEXT_SIZE * 6, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0x0000C0FF));
-    checkboxes[4]->setLabel("f5", font);
-    checkboxes[4]->click();
-    textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, 6 * PADDING_SIZE + TEXT_SIZE * 7.5, 320, TEXT_SIZE * 1.5, font));
-    checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, 6 * PADDING_SIZE + TEXT_SIZE * 7.5, TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, 0xC000C0FF));
-    checkboxes[5]->setLabel("f6", font);
-    checkboxes[5]->click();
+    uint32_t colors[6] = {0xC00000FF, 0xC0C000FF, 0x00C000FF, 0x00C0C0FF, 0x0000C0FF, 0xC000C0FF};
+    FormulaTree buf;
+    for (uint8_t i = 0; i < 6; ++i) {
+        textfields.push_back(new TextField(WINDOW_WIDTH - 320 - PADDING_SIZE, PADDING_SIZE * (i + 1) + TEXT_SIZE * 1.5 * i,
+            320, TEXT_SIZE * 1.5, font));
+        checkboxes.push_back(new CheckBox(WINDOW_WIDTH - 320 - 2 * PADDING_SIZE - TEXT_SIZE * 1.5, PADDING_SIZE * (i + 1) + TEXT_SIZE * 1.5 * i,
+            TEXT_SIZE * 1.5, TEXT_SIZE * 1.5, colors[i]));
+        checkboxes[i]->setLabel("f" + std::to_string(i + 1), font);
+        checkboxes[i]->click();
 
-    test.convertPolynom("sin(x)+sin(x*15)/3");
-    drawer.addGraph(test, 0xC00000FF);
-    
+        drawer.addGraph(buf, colors[i]);
+    }
+    createCallbacks();
     return;
 }
 
@@ -86,7 +183,7 @@ void eventProcessing(sf::RenderWindow& window) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [0.32]", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.1]", sf::Style::Close);
     onStart(window);
 
     while (window.isOpen()) {

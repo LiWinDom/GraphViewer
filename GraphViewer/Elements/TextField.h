@@ -15,9 +15,9 @@ public:
 
     void deactive();
 
-    void addChangeCallback(void (*callback)());
+    void addChangeCallback(void (*callback)(const std::string& text));
 
-    void addEnterCallback(void (*callback)());
+    void addEnterCallback(void (*callback)(const std::string& text));
 
     void eventProcessing(const sf::Event& event, const sf::Vector2i& mousePos);
 
@@ -33,5 +33,5 @@ private:
     sf::RectangleShape border;
     sf::Text textText;
 
-    std::vector<void (*)()> changeCallbacks = {}, enterCallbacks = {};
+    std::vector<void (*)(const std::string& text)> changeCallbacks = {}, enterCallbacks = {};
 };

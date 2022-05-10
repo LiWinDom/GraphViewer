@@ -41,12 +41,12 @@ void TextField::deactive() {
     return;
 }
 
-void TextField::addChangeCallback(void (*callback)()) {
+void TextField::addChangeCallback(void (*callback)(const std::string& text)) {
     this->changeCallbacks.push_back(callback);
     return;
 }
 
-void TextField::addEnterCallback(void (*callback)()) {
+void TextField::addEnterCallback(void (*callback)(const std::string& text)) {
     this->enterCallbacks.push_back(callback);
     return;
 }
@@ -95,7 +95,7 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
         if (event.type == sf::Event::KeyPressed) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
                 for (uint8_t i = 0; i < this->enterCallbacks.size(); ++i) {
-                    this->enterCallbacks[i]();
+                    this->enterCallbacks[i](this->text);
                 }
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
@@ -104,7 +104,7 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
                     this->textText.setString(this->text);
 
                     for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
-                        this->changeCallbacks[i]();
+                        this->changeCallbacks[i](this->text);
                     }
                 }
             }
@@ -114,7 +114,7 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
                     this->textText.setString(this->text);
 
                     for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
-                        this->changeCallbacks[i]();
+                        this->changeCallbacks[i](this->text);
                     }
                 }
             }
@@ -125,7 +125,7 @@ void TextField::eventProcessing(const sf::Event& event, const sf::Vector2i& mous
                 this->textText.setString(this->text);
 
                 for (uint8_t i = 0; i < this->changeCallbacks.size(); ++i) {
-                    this->changeCallbacks[i]();
+                    this->changeCallbacks[i](this->text);
                 }
             }
         }
