@@ -19,9 +19,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(0, tree);
@@ -32,9 +33,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(1, tree);
@@ -45,9 +47,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(2, tree);
@@ -58,9 +61,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(3, tree);
@@ -71,9 +75,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(4, tree);
@@ -84,9 +89,10 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
-                std::transform(text.begin(), text.end(), text.begin(),
+                std::string txt = text;
+                std::transform(txt.begin(), txt.end(), txt.begin(),
                     [](unsigned char c) { return std::tolower(c); });
-                tree.convertPolynom(text);
+                tree.convertPolynom(txt);
             }
             catch (Error err) {}
             drawer.changeGraph(5, tree);
