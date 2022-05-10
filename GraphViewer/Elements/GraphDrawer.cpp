@@ -68,7 +68,7 @@ void GraphDrawer::drawGraph(sf::RenderWindow& window, Graph* graph) {
 
 	sf::Vector2f lastPoint;
 	for (int16_t i = this->x; i < this->x + this->width; ++i) {
-		int16_t j = this->height / 2.0 - graph->calc((i - this->width / 2.0) / 100.0) * 100;
+		int64_t j = this->height / 2.0 - graph->calc((i - this->width / 2.0) / 100.0) * 100;
 
 		if (i > this->x) {
 			if (j > this->y && j < this->y + this->height && lastPoint.y > this->y && lastPoint.y < this->y + this->height) {
