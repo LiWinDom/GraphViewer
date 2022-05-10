@@ -47,7 +47,7 @@ void onStart(sf::RenderWindow& window) {
     checkboxes[5]->setLabel("f6", font);
     checkboxes[5]->click();
 
-    test.convertPolynom("sin(x + t)");
+    test.convertPolynom("sin(x)+sin(x*15)/3");
     drawer.addGraph(test, 0xC00000FF);
     
     return;

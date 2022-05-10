@@ -48,8 +48,9 @@ void GraphDrawer::drawGraph(sf::RenderWindow& window, Graph* graph) {
 		return;
 	}
 
-	for (int16_t i = this->x; i < this->width; ++i) {
-		int16_t j = graph->calc((i - this->width / 2.0) / 100.0) * 100 + this->height / 2;
+	for (int16_t i = this->x; i < this->x + this->width; ++i) {
+		int16_t j = this->height / 2.0 - graph->calc((i - this->width / 2.0) / 100.0) * 100;
+		if (j < this->y || j > this->y + this->height) continue;
 
 		sf::RectangleShape rect;
 		rect.setFillColor(sf::Color(graph->color));
