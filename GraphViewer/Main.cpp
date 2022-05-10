@@ -19,6 +19,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -30,6 +32,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -41,6 +45,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -52,6 +58,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -63,6 +71,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -74,6 +84,8 @@ void createCallbacks() {
         void {
             FormulaTree tree;
             try {
+                std::transform(text.begin(), text.end(), text.begin(),
+                    [](unsigned char c) { return std::tolower(c); });
                 tree.convertPolynom(text);
             }
             catch (Error err) {}
@@ -183,7 +195,7 @@ void eventProcessing(sf::RenderWindow& window) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.21]", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.22]", sf::Style::Close);
     onStart(window);
 
     while (window.isOpen()) {
