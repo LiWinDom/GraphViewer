@@ -9,9 +9,10 @@
 #include "FormulaTree.h"
 
 sf::Font font;
+bool inFocus = true;
+
 std::vector<CheckBox*> checkboxes = {};
 std::vector<TextField*> textfields = {};
-
 GraphDrawer drawer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 void createCallbacks() {
@@ -151,6 +152,7 @@ void onStart(sf::RenderWindow& window) {
     //icon.loadFromFile("resourses/icon.png");
     //window.setIcon(52, 52, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
+    window.setActive(true);
 
     uint32_t colors[6] = {0xC00000FF, 0xC0C000FF, 0x00C000FF, 0x00C0C0FF, 0x0000C0FF, 0xC000C0FF};
     FormulaTree buf;
@@ -196,12 +198,13 @@ void eventProcessing(sf::RenderWindow& window) {
         for (uint8_t i = 0; i < textfields.size(); ++i) {
             textfields[i]->eventProcessing(event, mousePos);
         }
+        drawer.eventProcessing(event, mousePos);
     }
     return;
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.22]", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.3]", sf::Style::Close);
     onStart(window);
 
     while (window.isOpen()) {
