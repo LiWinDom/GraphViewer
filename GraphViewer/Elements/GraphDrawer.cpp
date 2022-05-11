@@ -201,7 +201,7 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 		if (xCur.second <= xPrev.second && xCur.second < xNext.second) {
 			// Prepearing beautifuly looking number
 			int32_t num = this->pointToCoordinate(sf::Vector2f(j - 1, 0)).x * 8; // For correct working .125 numbers
-			int32_t a = num / 8;
+			int32_t a = std::abs(num / 8);
 			uint16_t b = std::abs((num % 8) * 125);
 			while (b % 10 == 0 && b > 0) b /= 10;
 
@@ -209,7 +209,12 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 			text.setFont(this->font);
 			text.setCharacterSize(TEXT_SIZE / 2);
 			text.setFillColor(sf::Color(0x000000FF));
-			text.setString(std::to_string(a) + "." + std::to_string(b));
+			if (num < 0) {
+				text.setString("-" + std::to_string(a) + "." + std::to_string(b));
+			}
+			else {
+				text.setString(std::to_string(a) + "." + std::to_string(b));
+			}
 
 			sf::FloatRect bounds = text.getLocalBounds();
 			text.setOrigin(bounds.width / 2.0, bounds.height);
@@ -240,7 +245,7 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 		if (yCur.second <= yPrev.second && yCur.second < yNext.second) {
 			// Prepearing beautifuly looking number
 			int32_t num = this->pointToCoordinate(sf::Vector2f(0, j - 1)).y * 8; // For correct working .125 numbers
-			int32_t a = num / 8;
+			int32_t a = std::abs(num / 8);
 			uint16_t b = std::abs((num % 8) * 125);
 			while (b % 10 == 0 && b > 0) b /= 10;
 
@@ -248,7 +253,12 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 			text.setFont(this->font);
 			text.setCharacterSize(TEXT_SIZE / 2);
 			text.setFillColor(sf::Color(0x000000FF));
-			text.setString(std::to_string(a) + "." + std::to_string(b));
+			if (num < 0) {
+				text.setString("-" + std::to_string(a) + "." + std::to_string(b));
+			}
+			else {
+				text.setString(std::to_string(a) + "." + std::to_string(b));
+			}
 
 			sf::FloatRect bounds = text.getLocalBounds();
 			text.setOrigin(0, TEXT_SIZE / 3);
