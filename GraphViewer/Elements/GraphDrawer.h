@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include <vector>
 
 #include "../Containers.h"
@@ -10,6 +11,8 @@ class GraphDrawer
 {
 public:
 	GraphDrawer(const int16_t& x, const int16_t& y, const uint16_t& width, const uint16_t& height);
+
+	void setFont(const sf::Font& font);
 
 	uint8_t addGraph(const FormulaTree& tree, const uint32_t& color);
 
@@ -28,6 +31,7 @@ public:
 private:
 	int16_t x, y;
 	uint16_t width, height;
+	sf::Font font;
 
 	sf::Vector2f needShift = sf::Vector2f(0, 0), shift = sf::Vector2f(0, 0);
 	double scale = 100;
@@ -60,9 +64,9 @@ private:
 
 	sf::Vector2f pointToCoordinate(const sf::Vector2f& point);
 
-	void drawPrimaryLines(sf::RenderWindow& window);
+	void drawLines(sf::RenderWindow& window);
 
-	void drawSecondaryLines(sf::RenderWindow& window);
+	void drawNumbers(sf::RenderWindow& window);
 
 	void drawGraph(sf::RenderWindow& window, Graph* graph);
 };

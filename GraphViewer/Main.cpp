@@ -166,6 +166,7 @@ void onStart(sf::RenderWindow& window) {
 
         drawer.addGraph(buf, colors[i]);
     }
+    drawer.setFont(font);
     createCallbacks();
     return;
 }
@@ -204,7 +205,7 @@ void eventProcessing(sf::RenderWindow& window) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.30]", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Graph Viewer [1.4]", sf::Style::Close);
     onStart(window);
 
     while (window.isOpen()) {

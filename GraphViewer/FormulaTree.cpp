@@ -215,6 +215,7 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				nodes.push(new Node(number));
 				number = 0;
 				signsAfterZero = 1;
+				operations.push("*");
 				operations.push("(");
 				last = "(";
 				continue;
@@ -703,6 +704,7 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				nodes.push(new Node(number));
 				number = 0;
 				signsAfterZero = 1;
+				operations.push("*");
 				operations.push("(");
 				last = "(";
 				continue;
