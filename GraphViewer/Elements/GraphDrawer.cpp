@@ -80,10 +80,10 @@ void GraphDrawer::eventProcessing(const sf::Event& event, const sf::Vector2i& mo
 		this->mouseButton = "none";
 	}
 	else if (event.type == sf::Event::MouseWheelMoved) {
-		if (event.mouseWheel.delta > 0 && this->scale < 1000 -  this->scale / 20) {
+		if (event.mouseWheel.delta > 0 && this->scale < 1000) {
 			this->scale += this->scale / 20;
 		}
-		else if (event.mouseWheel.delta < 0 && this->scale > 10 + this->scale / 20) {
+		else if (event.mouseWheel.delta < 0 && this->scale > 10) {
 			this->scale -= this->scale / 20;
 		}
 	}
@@ -112,12 +112,13 @@ sf::Vector2f GraphDrawer::pointToCoordinate(const sf::Vector2f& point) {
 }
 
 void GraphDrawer::drawLines(sf::RenderWindow& window) {
-	double multiplier = 0.25;
-	if (this->scale > 700) multiplier = 8;
+	double multiplier = 0.125;
+	if (this->scale > 500) multiplier = 8;
 	else if (this->scale > 250) multiplier = 4;
 	else if (this->scale > 100) multiplier = 2;
 	else if (this->scale > 50) multiplier = 1;
 	else if (this->scale > 25) multiplier = 0.5;
+	else if (this->scale > 15) multiplier = 0.25;
 
 	double intpart;
 	std::pair<double, double> xPrev, xCur, xNext;
@@ -179,12 +180,13 @@ void GraphDrawer::drawLines(sf::RenderWindow& window) {
 }
 
 void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
-	double multiplier = 0.25;
-	if (this->scale >= 700) multiplier = 8;
-	else if (this->scale >= 250) multiplier = 4;
-	else if (this->scale >= 100) multiplier = 2;
-	else if (this->scale >= 50) multiplier = 1;
-	else if (this->scale >= 25) multiplier = 0.5;
+	double multiplier = 0.125;
+	if (this->scale > 500) multiplier = 8;
+	else if (this->scale > 250) multiplier = 4;
+	else if (this->scale > 100) multiplier = 2;
+	else if (this->scale > 50) multiplier = 1;
+	else if (this->scale > 25) multiplier = 0.5;
+	else if (this->scale > 15) multiplier = 0.25;
 
 	double intpart;
 	std::pair<double, double> xPrev, xCur, xNext;
@@ -197,33 +199,30 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 		xNext.first = intpart;
 
 		if (xCur.second <= xPrev.second && xCur.second < xNext.second) {
-			// Some magic
-			int32_t num = this->pointToCoordinate(sf::Vector2f(j - 1, 0)).x * 8;
-			if ((num / 2) % (uint8_t)(8 / multiplier) == 0) {
-				sf::Text text;
-				text.setFont(this->font);
-				text.setCharacterSize(TEXT_SIZE / 2);
-				text.setFillColor(sf::Color(0x000000FF));
+			// Prepearing beautifuly looking number
+			int32_t num = this->pointToCoordinate(sf::Vector2f(j - 1, 0)).x * 8; // For correct working .125 numbers
+			int32_t a = num / 8;
+			uint16_t b = std::abs((num % 8) * 125);
+			while (b % 10 == 0 && b > 0) b /= 10;
 
-				// Prepearing beautifuly looking number
-				int16_t a = num / 8;
-				uint16_t b = std::abs((num % 8) * 125);
-				while (b % 10 == 0 && b > 0) b /= 10;
-				text.setString(std::to_string(a) + "." + std::to_string(b));
+			sf::Text text;	
+			text.setFont(this->font);
+			text.setCharacterSize(TEXT_SIZE / 2);
+			text.setFillColor(sf::Color(0x000000FF));
+			text.setString(std::to_string(a) + "." + std::to_string(b));
 
-				sf::FloatRect bounds = text.getLocalBounds();
-				text.setOrigin(bounds.width / 2.0, bounds.height);
-				text.setPosition(j - 1, this->y + this->height - 10);
+			sf::FloatRect bounds = text.getLocalBounds();
+			text.setOrigin(bounds.width / 2.0, bounds.height);
+			text.setPosition(j - 1, this->y + this->height - 10);
 
-				sf::RectangleShape bg;
-				bg.setFillColor(sf::Color(0xFFFFFFA0));
-				bg.setSize(sf::Vector2f(bounds.width + 2 * PADDING_SIZE, TEXT_SIZE / 3 + 2 * PADDING_SIZE));
-				bg.setOrigin(bounds.width / 2 + PADDING_SIZE, TEXT_SIZE / 6 + PADDING_SIZE);
-				bg.setPosition(sf::Vector2f(j - 1, this->y + this->height - 10));
+			sf::RectangleShape bg;
+			bg.setFillColor(sf::Color(0xFFFFFFA0));
+			bg.setSize(sf::Vector2f(bounds.width + 2 * PADDING_SIZE, TEXT_SIZE / 3 + 2 * PADDING_SIZE));
+			bg.setOrigin(bounds.width / 2 + PADDING_SIZE, TEXT_SIZE / 6 + PADDING_SIZE);
+			bg.setPosition(sf::Vector2f(j - 1, this->y + this->height - 10));
 
-				window.draw(bg);
-				window.draw(text);
-			}
+			window.draw(bg);
+			window.draw(text);
 		}
 		xPrev = xCur;
 		xCur = xNext;
@@ -239,33 +238,30 @@ void GraphDrawer::drawNumbers(sf::RenderWindow& window) {
 		yNext.first = intpart;
 
 		if (yCur.second <= yPrev.second && yCur.second < yNext.second) {
-			// More magic
-			int32_t num = this->pointToCoordinate(sf::Vector2f(0, j - 1)).y * 8;
-			if ((num / 2) % (uint8_t)(8 / multiplier) == 0) {
-				sf::Text text;
-				text.setFont(this->font);
-				text.setCharacterSize(TEXT_SIZE / 2);
-				text.setFillColor(sf::Color(0x000000FF));
+			// Prepearing beautifuly looking number
+			int32_t num = this->pointToCoordinate(sf::Vector2f(0, j - 1)).y * 8; // For correct working .125 numbers
+			int32_t a = num / 8;
+			uint16_t b = std::abs((num % 8) * 125);
+			while (b % 10 == 0 && b > 0) b /= 10;
 
-				// Prepearing beautifuly looking number
-				int16_t a = num / 8;
-				uint16_t b = std::abs((num % 8) * 125);
-				while (b % 10 == 0 && b > 0) b /= 10;
-				text.setString(std::to_string(a) + "." + std::to_string(b));
+			sf::Text text;
+			text.setFont(this->font);
+			text.setCharacterSize(TEXT_SIZE / 2);
+			text.setFillColor(sf::Color(0x000000FF));
+			text.setString(std::to_string(a) + "." + std::to_string(b));
 
-				sf::FloatRect bounds = text.getLocalBounds();
-				text.setOrigin(0, TEXT_SIZE / 3);
-				text.setPosition(this->x + 10, j - 1);
+			sf::FloatRect bounds = text.getLocalBounds();
+			text.setOrigin(0, TEXT_SIZE / 3);
+			text.setPosition(this->x + 10, j - 1);
 
-				sf::RectangleShape bg;
-				bg.setFillColor(sf::Color(0xFFFFFFA0));
-				bg.setSize(sf::Vector2f(bounds.width + 2 * PADDING_SIZE, TEXT_SIZE / 3 + 2 * PADDING_SIZE));
-				bg.setOrigin(PADDING_SIZE, TEXT_SIZE / 6 + PADDING_SIZE);
-				bg.setPosition(sf::Vector2f(this->x + 10, j - 1));
+			sf::RectangleShape bg;
+			bg.setFillColor(sf::Color(0xFFFFFFA0));
+			bg.setSize(sf::Vector2f(bounds.width + 2 * PADDING_SIZE, TEXT_SIZE / 3 + 2 * PADDING_SIZE));
+			bg.setOrigin(PADDING_SIZE, TEXT_SIZE / 6 + PADDING_SIZE);
+			bg.setPosition(sf::Vector2f(this->x + 10, j - 1));
 
-				window.draw(bg);
-				window.draw(text);
-			}
+			window.draw(bg);
+			window.draw(text);
 		}
 		yPrev = yCur;
 		yCur = yNext;
