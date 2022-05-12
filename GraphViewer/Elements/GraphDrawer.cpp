@@ -102,8 +102,8 @@ void GraphDrawer::draw(sf::RenderWindow& window) {
 }
 
 sf::Vector2f GraphDrawer::coordinateToPoint(const sf::Vector2f& coordinate) {
-	return sf::Vector2f((coordinate.x - this->shift.x) * this->scale + this->width / 2 + this->x,
-		(-coordinate.y - this->shift.y) * this->scale + this->height / 2 + this->y);
+	return sf::Vector2f((coordinate.x - this->shift.x) * this->scale + this->width / 2.0 + this->x,
+		(-coordinate.y - this->shift.y) * this->scale + this->height / 2.0 + this->y);
 }
 
 sf::Vector2f GraphDrawer::pointToCoordinate(const sf::Vector2f& point) {
