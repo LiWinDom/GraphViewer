@@ -360,6 +360,12 @@ void FormulaTree::convertPolynom(std::string polynom) {
 				last = "(";
 				continue;
 			}
+			if (polynom[i] == '-') {
+				nodes.push(new Node(0));
+				operations.push("-");
+				last = "operation";
+				continue;
+			}
 			if (polynom[i] == '0') {
 				last = "leadingZero";
 				continue;
